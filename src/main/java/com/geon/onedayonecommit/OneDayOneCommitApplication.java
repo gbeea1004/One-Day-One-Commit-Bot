@@ -9,5 +9,4 @@ public class OneDayOneCommitApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OneDayOneCommitApplication.class, args);
 	}
-
 }
