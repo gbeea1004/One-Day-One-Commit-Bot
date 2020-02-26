@@ -2,6 +2,10 @@ handlebars:
   suffix: .html
 
 # static 영역
+#spring:
+#  mvc:
+#    static-path-pattern: /resources/**
+
 spring:
-  mvc:
-    static-path-pattern: /resources/**
+  profiles:
+    include: oauth

@@ -1,7 +1,7 @@
 package com.geon.onedayonecommit.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.geon.onedayonecommit.domain.Result;
+import com.geon.onedayonecommit.dto.Result;
 import com.geon.onedayonecommit.service.GithubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +17,7 @@ public class ApiGithubController {
     private GithubService githubService;
 
     @GetMapping("users/{userId}/commit")
-    public String searchTodayCommitByUserId(@PathVariable String userId) throws JsonProcessingException {
-        Result result = githubService.getJsonDataWhereTodayCommitByUserId(userId);
-        return result.message();
+    public Result searchTodayCommitByUserId(@PathVariable String userId) throws JsonProcessingException {
+        return githubService.getJsonDataWhereTodayCommitByUserId(userId);
     }
 }

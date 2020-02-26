@@ -3,7 +3,7 @@ package com.geon.onedayonecommit.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.geon.onedayonecommit.domain.Result;
+import com.geon.onedayonecommit.dto.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

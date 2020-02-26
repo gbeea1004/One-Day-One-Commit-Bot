@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +10,20 @@
 <body>
 
 <h2>커밋 알리미</h2>
-<a href="https://kauth.kakao.com/oauth/authorize?client_id=37055d53a7ddf47e7c5c0e56ffee125f&redirect_uri=http://localhost:8080&response_type=code">
-    <img src="/resources/images/kakao_login.png" alt="카카오 로그인"/>
-</a>
+
+{{#userName}}
+    유저 : {{userName}}
+    <a href="/logout" class="btn btn-info active" role="button">로그아웃</a>
+{{/userName}}
+
+{{^userName}}
+<!--    <a href="https://kauth.kakao.com/oauth/authorize?client_id=37055d53a7ddf47e7c5c0e56ffee125f&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code">-->
+    <a href="/oauth2/authorization/kakao">
+        <img src="/resources/images/kakao_login.png" alt="카카오 로그인"/>
+    </a>
+{{/userName}}
+
+
 
 </body>
 
