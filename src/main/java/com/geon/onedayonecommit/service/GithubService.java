@@ -7,10 +7,9 @@ import com.geon.onedayonecommit.domain.user.User;
 import com.geon.onedayonecommit.dto.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import util.MediaType;
 
@@ -19,12 +18,19 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 public class GithubService {
-    private final String URL = "https://api.github.com/search/commits?q=author:%s+committer-date:>=%s";
-    private final UserService userService;
     private final RestTemplate restTemplate;
 
-    public Result getJsonDataWhereTodayCommitByUserId(Integer userId) throws JsonProcessingException {
-        String githubId = userService.findUserByUserId(userId).getGithubId();
+    public boolean isExistUser(String githubId) {
+        try {
+            restTemplate.getForEntity("https://api.github.com/users/" + githubId, String.class);
+        } catch (HttpClientErrorException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public Result getJsonDataWhereTodayCommitByGithubId(String githubId) throws JsonProcessingException {
+        final String URL = "https://api.github.com/search/commits?q=author:%s+committer-date:>=%s";
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.GIT_HUB_COMMIT.getType());
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
