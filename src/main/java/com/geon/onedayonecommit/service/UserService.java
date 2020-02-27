@@ -8,17 +8,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
     private final HttpSession session;
 
-    @Transactional(readOnly = true)
     public User findUserByUserId(Integer userId) {
         return userRepository.findById(userId)
                              .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public List<User> findAllUsersWhereGithubIdIsNotNull() {
+        List<User> users = userRepository.findAllByGithubIdIsNotNull();
+        if (users.size() == 0) {
+            throw new IllegalArgumentException("유저가 없습니다.");
+        }
+        return users;
     }
 
     @Transactional
