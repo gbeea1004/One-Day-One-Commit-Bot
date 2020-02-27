@@ -2,7 +2,9 @@ package com.geon.onedayonecommit.config.auth;
 
 import com.geon.onedayonecommit.config.auth.dto.OAuthAttributes;
 import com.geon.onedayonecommit.config.auth.dto.SessionUser;
+import com.geon.onedayonecommit.domain.Token;
 import com.geon.onedayonecommit.domain.user.User;
+import com.geon.onedayonecommit.repository.TokenRepository;
 import com.geon.onedayonecommit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +23,7 @@ import java.util.Collections;
 @Service
 public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -38,6 +41,9 @@ public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserReque
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
+
+        Token token = new Token(user.getId(), userRequest.getAccessToken().getTokenValue());
+        tokenRepository.save(token);
 
         return new DefaultOAuth2User(Collections.singleton(
                 new SimpleGrantedAuthority(user.getRoleKey())),

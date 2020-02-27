@@ -18,8 +18,7 @@ public class HomeController {
     public String home(Model model) {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
-            model.addAttribute("userName", user.getName());
-            model.addAttribute("profileImage", user.getPicture());
+            model.addAttribute("loginedUser", user);
         }
         return "index";
     }

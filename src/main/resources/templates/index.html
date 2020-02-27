@@ -11,16 +11,20 @@
 
 <h2>커밋 알리미</h2>
 
-{{#userName}}
-    유저 : <img src="{{profileImage}}" width="200px" height="200px"> {{userName}}
-    <a href="/logout" class="btn btn-info active" role="button">로그아웃</a>
-{{/userName}}
+{{#loginedUser}}
+유저 : <img src="{{picture}}" width="200px" height="200px"> {{name}}
+<a href="/logout" class="btn btn-info active" role="button">로그아웃</a>
+<br>
+<form id="send_message" action="/api/kakao/sendMessage/users/{{id}}" method="post">
+    <button type="submit">메시지 보내기</button>
+</form>
+{{/loginedUser}}
 
-{{^userName}}
-    <a href="/oauth2/authorization/kakao">
-        <img src="/images/kakao_login.png" alt="카카오 로그인"/>
-    </a>
-{{/userName}}
+{{^loginedUser}}
+<a href="/oauth2/authorization/kakao">
+    <img src="/images/kakao_login.png" alt="카카오 로그인"/>
+</a>
+{{/loginedUser}}
 
 
 
