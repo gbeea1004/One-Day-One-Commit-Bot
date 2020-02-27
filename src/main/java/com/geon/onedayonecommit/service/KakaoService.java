@@ -5,6 +5,8 @@ import com.geon.onedayonecommit.domain.token.Token;
 import com.geon.onedayonecommit.domain.token.TokenRepository;
 import com.geon.onedayonecommit.dto.Result;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 public class KakaoService {
-
+    private static final Logger log = LoggerFactory.getLogger(KakaoService.class);
     private static final String HOST = "https://kapi.kakao.com";
     private static final Integer TEMPLATE_ID = 20859;
     private final TokenRepository tokenRepository;
@@ -26,7 +28,7 @@ public class KakaoService {
     public void sendMessageToMe(Integer userId) throws JsonProcessingException {
         Result result = githubService.getJsonDataWhereTodayCommitByUserId(userId);
         if (result.isTodayCommit()) {
-            System.out.println("오늘 커밋 수 : " + result.getTodayCommitCount());
+            log.debug("오늘 커밋 수 : {}", result.getTodayCommitCount());
             return;
         }
 
