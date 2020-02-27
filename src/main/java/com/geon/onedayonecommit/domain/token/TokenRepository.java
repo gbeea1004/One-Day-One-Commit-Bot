@@ -1,6 +1,6 @@
-package com.geon.onedayonecommit.repository;
+package com.geon.onedayonecommit.domain.token;
 
-import com.geon.onedayonecommit.domain.Token;
+import com.geon.onedayonecommit.domain.token.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -20,6 +20,8 @@ public class User {
     @Column
     private String picture;
 
+    private String githubId;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -30,6 +32,10 @@ public class User {
         this.name = name;
         this.picture = picture;
         this.role = role;
+    }
+
+    public void updateGithubId(String githubId) {
+        this.githubId = githubId;
     }
 
     public User update(String name, String picture) {

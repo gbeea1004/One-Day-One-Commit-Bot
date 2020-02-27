@@ -1,4 +1,4 @@
-package com.geon.onedayonecommit.domain;
+package com.geon.onedayonecommit.domain.token;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

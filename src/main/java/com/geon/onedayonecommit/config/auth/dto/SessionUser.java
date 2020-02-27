@@ -10,10 +10,15 @@ public class SessionUser implements Serializable {
     private Integer id;
     private String name;
     private String picture;
+    private String githubId;
 
     public SessionUser(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.picture = user.getPicture();
+    }
+
+    public void updateGithubId(String githubId) {
+        this.githubId = githubId;
     }
 }

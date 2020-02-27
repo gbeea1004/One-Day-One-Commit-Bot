@@ -1,4 +1,4 @@
-package com.geon.onedayonecommit.controller;
+package com.geon.onedayonecommit.web;
 
 import com.geon.onedayonecommit.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,9 @@
 package com.geon.onedayonecommit.service;
 
-import com.geon.onedayonecommit.domain.Token;
-import com.geon.onedayonecommit.repository.TokenRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.geon.onedayonecommit.domain.token.Token;
+import com.geon.onedayonecommit.domain.token.TokenRepository;
+import com.geon.onedayonecommit.dto.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +21,15 @@ public class KakaoService {
     private static final Integer TEMPLATE_ID = 20859;
     private final TokenRepository tokenRepository;
     private final RestTemplate restTemplate;
+    private final GithubService githubService;
 
-    public void sendMessageToMe(Integer userId) {
+    public void sendMessageToMe(Integer userId) throws JsonProcessingException {
+        Result result = githubService.getJsonDataWhereTodayCommitByUserId(userId);
+        if (result.isTodayCommit()) {
+            System.out.println("오늘 커밋 수 : " + result.getTodayCommitCount());
+            return;
+        }
+
         final String URL = HOST + "/v2/api/talk/memo/send";
         HttpHeaders headers = new HttpHeaders();
         Token token = tokenRepository.findByUserId(userId)

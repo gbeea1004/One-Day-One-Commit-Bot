@@ -1,6 +1,5 @@
-package com.geon.onedayonecommit.repository;
+package com.geon.onedayonecommit.domain.user;
 
-import com.geon.onedayonecommit.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

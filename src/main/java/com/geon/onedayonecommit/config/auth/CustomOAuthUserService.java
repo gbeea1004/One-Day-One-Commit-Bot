@@ -2,10 +2,10 @@ package com.geon.onedayonecommit.config.auth;
 
 import com.geon.onedayonecommit.config.auth.dto.OAuthAttributes;
 import com.geon.onedayonecommit.config.auth.dto.SessionUser;
-import com.geon.onedayonecommit.domain.Token;
+import com.geon.onedayonecommit.domain.token.Token;
 import com.geon.onedayonecommit.domain.user.User;
-import com.geon.onedayonecommit.repository.TokenRepository;
-import com.geon.onedayonecommit.repository.UserRepository;
+import com.geon.onedayonecommit.domain.token.TokenRepository;
+import com.geon.onedayonecommit.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

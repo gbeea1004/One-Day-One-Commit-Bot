@@ -3,7 +3,9 @@ package com.geon.onedayonecommit.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.geon.onedayonecommit.domain.user.User;
 import com.geon.onedayonecommit.dto.Result;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,17 +17,19 @@ import util.MediaType;
 import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 public class GithubService {
     private final String URL = "https://api.github.com/search/commits?q=author:%s+committer-date:>=%s";
+    private final UserService userService;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    public Result getJsonDataWhereTodayCommitByUserId(String userId) throws JsonProcessingException {
+    public Result getJsonDataWhereTodayCommitByUserId(Integer userId) throws JsonProcessingException {
+        String githubId = userService.findUserByUserId(userId).getGithubId();
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.GIT_HUB_COMMIT.getType());
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-        String jsonData = restTemplate.exchange(String.format(URL, userId, LocalDate.now().toString()), HttpMethod.GET, httpEntity, String.class).getBody();
+
+        String jsonData = restTemplate.exchange(String.format(URL, githubId, LocalDate.now().toString()), HttpMethod.GET, httpEntity, String.class).getBody();
         return _toResult(jsonData);
     }
 
