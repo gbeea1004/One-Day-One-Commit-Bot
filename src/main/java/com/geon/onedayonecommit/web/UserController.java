@@ -25,6 +25,12 @@ public class UserController {
         return "user/update_github_id_form";
     }
 
+    @GetMapping("{userId}")
+    public String showProfile(@PathVariable Integer userId, Model model) {
+        model.addAttribute("user", userService.findUserByUserId(userId));
+        return "user/profile";
+    }
+
     // TODO : hidden PUT으로 줬는데 왜 POST로 요청을 보내냐..
     @PostMapping("{userId}")
     public String updateGithubId(@PathVariable Integer userId, String githubId, Model model) {

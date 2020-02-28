@@ -1,0 +1,25 @@
+{{#partial "contents"}}
+<div class="container-fluid">
+    <h2>My Profile</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">GITHUB ID</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#user}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{githubId}}</td>
+            <td><button type="button" class="btn btn-outline-info btn-sm" onclick="location.href='/users/{{id}}/form'">깃허브 아이디 수정</button></td>
+        </tr>
+        {{/user}}
+        </tbody>
+    </table>
+</div>
+{{/partial}}
+
+{{>base}}
