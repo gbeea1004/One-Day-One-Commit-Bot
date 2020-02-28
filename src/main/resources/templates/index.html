@@ -1,43 +1,47 @@
 {{#partial "contents"}}
-
-<div class="container-fluid">
+<div class="col-md-12 text-center">
     <h1>One Day One Commit</h1>
-    <p>하루에 한번은 커밋하자!</p>
-</div>
-
-{{^loginedUser}}
-<div class="container-fluid">
-    <div class="alert alert-dismissible alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>커밋 봇 서비스를 이용하시려면 Kakao 로그인을 해주세요!</strong>
-    </div>
-</div>
-{{/loginedUser}}
-
-<button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-secondary">Secondary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-warning">Warning</button>
-<button type="button" class="btn btn-danger">Danger</button>
-<button type="button" class="btn btn-link">Link</button>
-
-<button type="button" class="btn btn-success">Success</button>
-
-{{#loginedUser}}
-    {{#githubId}}
+    <p><strong class="text-warning">하루에</strong> <strong class="text-success">한번은</strong> <strong class="text-info">커밋하자!</strong></p>
+    <br>
+    <p><span class="badge badge-pill badge-warning">커밋까지 남은 시간</span></p>
+    <h4 id="timer"></h4>
+    <blockquote class="blockquote text-center">
+        <br><img src="/images/javajigi.png" class="rounded">
+        <p class="mb-0"><img src="/images/alarm.svg" alt="" width="30" height="30" title="커밋시간">
+            <small class="text-muted"><span class="badge badge-pill badge-info">오후 11시</span>가 될때까지 커밋을 하지 않는다면</small></p>
+        <p class="mb-0"><small class="text-muted">커밋 봇이 당신을 찾아갑니다</small></p>
+        <footer class="blockquote-footer">By <cite title="Source Title">자바지기 요정</cite></footer>
+    </blockquote>
+    {{^loginedUser}}
+        <div class="container-fluid">
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>커밋 봇 서비스를 이용하시려면 Kakao 로그인을 해주세요!</strong>
+            </div>
+        </div>
+    {{/loginedUser}}
+    {{#loginedUser}}
+        {{#githubId}}
         <form id="send_message" action="/api/kakao/sendMessage/users/{{id}}" method="post">
-            <button type="submit">메시지 보내기</button>
+            <button type="submit" class="btn btn-success">나에게 메시지 보내기</button>
         </form>
-    {{/githubId}}
-    {{^githubId}}
+<!--        <form>-->
+<!--            <button type="submit" class="btn btn-success">나의 커밋 횟수</button>-->
+<!--        </form>-->
+        {{/githubId}}
+        {{^githubId}}
         <div class="container-fluid">
             <div class="alert alert-dismissible alert-danger">
                 커밋 봇 서비스를 이용하시려면 <strong><a class="text-info" href="/users/{{id}}/form">깃허브 아이디를 등록</a></strong>하셔야 합니다!
             </div>
         </div>
-    {{/githubId}}
-{{/loginedUser}}
+        {{/githubId}}
+    {{/loginedUser}}
+</div>
+
+<!--<div class="container-fluid">-->
+<!--</div>-->
+
 
 {{/partial}}
 

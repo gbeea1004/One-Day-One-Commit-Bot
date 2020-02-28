@@ -7,6 +7,8 @@
     <title>커밋 알리미</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    {{#block "headers"}}
+    {{/block}}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -16,6 +18,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor03">
+        {{#loginedUser}}
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="#">My</a>
@@ -27,13 +30,14 @@
                 <a class="nav-link" href="#">About</a>
             </li>
         </ul>
-        {{#loginedUser}}
         <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
             <img src="{{picture}}" class="rounded" width="30" height="30">&nbsp;&nbsp;{{name}}님 안녕하세요
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
         </form>
         {{/loginedUser}}
         {{^loginedUser}}
+        <ul class="navbar-nav mr-auto">
+        </ul>
         <form class="form-inline my-2 my-lg-0" action="/oauth2/authorization/kakao" method="get">
             <input class="form-control mr-sm-2" type="text" placeholder="Search">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Kakao login</button>
