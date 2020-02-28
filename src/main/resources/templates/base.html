@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>커밋 알리미</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Commit Bot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">My</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+        </ul>
+        {{#loginedUser}}
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="get">
+            <img src="{{picture}}" class="rounded" width="30" height="30">&nbsp;&nbsp;{{name}}님 안녕하세요
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
+        </form>
+        {{/loginedUser}}
+        {{^loginedUser}}
+        <form class="form-inline my-2 my-lg-0" action="/oauth2/authorization/kakao" method="get">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Kakao login</button>
+        </form>
+        {{/loginedUser}}
+    </div>
+</nav>
+<br>
+
+{{#block "contents"}}
+{{/block}}
+
+<script src="/js/jquery-2.2.0.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

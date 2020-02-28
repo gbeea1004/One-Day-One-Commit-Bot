@@ -25,7 +25,7 @@ public class UserService {
     public List<User> findAllUsersWhereGithubIdIsNotNull() {
         List<User> users = userRepository.findAllByGithubIdIsNotNull();
         if (users.size() == 0) {
-            throw new IllegalArgumentException("유저가 없습니다.");
+            throw new IllegalArgumentException("GithubId를 저장한 유저가 없습니다.");
         }
         return users;
     }

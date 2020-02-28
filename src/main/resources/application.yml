@@ -1,5 +1,7 @@
 handlebars:
   suffix: .html
+  cache: false
+  expose-session-attributes: true
 
 spring:
   h2:
