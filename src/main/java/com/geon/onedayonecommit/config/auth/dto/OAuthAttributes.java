@@ -14,14 +14,16 @@ public class OAuthAttributes {
     private Integer id;
     private String name;
     private String picture;
+    private String githubId;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, Integer id, String name, String picture) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, Integer id, String name, String picture, String githubId) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.id = id;
         this.name = name;
         this.picture = picture;
+        this.githubId = githubId;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {

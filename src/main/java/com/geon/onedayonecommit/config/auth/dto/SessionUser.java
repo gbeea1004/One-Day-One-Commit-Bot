@@ -16,6 +16,7 @@ public class SessionUser implements Serializable {
         this.id = user.getId();
         this.name = user.getName();
         this.picture = user.getPicture();
+        this.githubId = user.getGithubId();
     }
 
     public void updateGithubId(String githubId) {
