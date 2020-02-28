@@ -33,7 +33,7 @@ public class UserService {
     @Transactional
     public void updateGithubId(Integer userId, String githubId) {
         User user = findUserByUserId(userId);
-        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        SessionUser sessionUser = (SessionUser) session.getAttribute("loginedUser");
 
         if (user.getId()
                 .equals(sessionUser.getId())) {

@@ -29,11 +29,13 @@ public class UserController {
 
     // TODO : hidden PUT으로 줬는데 왜 POST로 요청을 보내냐..
     @PostMapping("{userId}")
-    public String updateGithubId(@PathVariable Integer userId, String githubId) {
-        if (!githubService.isExistUser(githubId)) {
-            log.debug("존재 하지 않는 깃허브 아이디 입니다.");
+    public String updateGithubId(@PathVariable Integer userId, String githubId, Model model) {
+        if (githubService.isExistUser(githubId)) {
+            userService.updateGithubId(userId, githubId);
+            return "redirect:/";
         }
-        userService.updateGithubId(userId, githubId);
-        return "redirect:/";
+        log.debug("존재 하지 않는 깃허브 아이디 입니다.");
+        model.addAttribute("id", userId);
+        return "user/update_github_id_failed_form";
     }
 }

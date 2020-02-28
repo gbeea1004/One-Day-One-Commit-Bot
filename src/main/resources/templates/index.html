@@ -25,20 +25,17 @@
 <button type="button" class="btn btn-success">Success</button>
 
 {{#loginedUser}}
-    <a href="/users/{{id}}/form">업데이트 폼으로 이동</a>
-
     {{#githubId}}
         <form id="send_message" action="/api/kakao/sendMessage/users/{{id}}" method="post">
             <button type="submit">메시지 보내기</button>
         </form>
     {{/githubId}}
     {{^githubId}}
-        <form id="update_github_id" action="/users/{{id}}" method="post">
-            <input type="hidden" name="_method" value="PUT">
-            <input type="text" id="githubId" name="githubId" required>
-            <label for="githubId">깃허브 아이디</label>
-            <button type="submit">깃허브 아이디 등록</button>
-        </form>
+        <div class="container-fluid">
+            <div class="alert alert-dismissible alert-danger">
+                커밋 봇 서비스를 이용하시려면 <strong><a class="text-info" href="/users/{{id}}/form">깃허브 아이디를 등록</a></strong>하셔야 합니다!
+            </div>
+        </div>
     {{/githubId}}
 {{/loginedUser}}
 
