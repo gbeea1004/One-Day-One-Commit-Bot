@@ -7,18 +7,16 @@ import com.geon.onedayonecommit.service.GithubService;
 import com.geon.onedayonecommit.service.KakaoService;
 import com.geon.onedayonecommit.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/kakao/")
+@Component
 @RequiredArgsConstructor
-public class ApiKakaoController {
-    private static final Logger log = LoggerFactory.getLogger(ApiKakaoController.class);
+@Slf4j
+public class Scheduler {
     private final KakaoService kakaoService;
     private final GithubService githubService;
     private final UserService userService;
@@ -29,18 +27,18 @@ public class ApiKakaoController {
         List<User> users = userService.findAllUsersWhereGithubIdIsNotNull();
 
         for (User user : users) {
-            sendMessageToMe(user.getId());
+            sendMessage(user.getId());
         }
     }
 
-    @PostMapping("sendMessage/users/{userId}")
-    public void sendMessageToMe(@PathVariable Integer userId) throws JsonProcessingException {
+    private void sendMessage(Integer userId) throws JsonProcessingException {
         String githubId = userService.findUserByUserId(userId).getGithubId();
         Result result = githubService.getJsonDataWhereTodayCommitByGithubId(githubId);
         if (result.isTodayCommit()) {
             log.debug("깃허브 아이디 : {}, 오늘 커밋 수 : {}", githubId, result.getTodayCommitCount());
             return;
         }
+        log.debug("커밋 메시지 전송 시간이 되어 {}에게 메시지를 보냅니다.", githubId);
         kakaoService.sendMessageToMe(userId);
     }
 }

@@ -3,8 +3,7 @@ package com.geon.onedayonecommit.web;
 import com.geon.onedayonecommit.service.GithubService;
 import com.geon.onedayonecommit.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/users/")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
     private final UserService userService;
     private final GithubService githubService;
 
-    @GetMapping("{id}/form")
-    public String updateGithubIdForm(@PathVariable Integer id, Model model) {
-        model.addAttribute("id", id);
+    @GetMapping("{userId}/form")
+    public String updateGithubIdForm(@PathVariable Integer userId, Model model) {
+        model.addAttribute("userId", userId);
         return "user/update_github_id_form";
     }
 

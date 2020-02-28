@@ -22,12 +22,16 @@
     {{/loginedUser}}
     {{#loginedUser}}
         {{#githubId}}
-        <form id="send_message" action="/api/kakao/sendMessage/users/{{id}}" method="post">
-            <button type="submit" class="btn btn-success">나에게 메시지 보내기</button>
-        </form>
-<!--        <form>-->
-<!--            <button type="submit" class="btn btn-success">나의 커밋 횟수</button>-->
+<!--        <form id="send_message" action="/api/kakao/sendMessage/users/{{id}}" method="post">-->
+<!--            <button type="submit" class="btn btn-success">나에게 메시지 보내기</button>-->
 <!--        </form>-->
+
+        {{#confirmCommit}}
+            <p>오늘은 {{todayCommitCount}} 커밋을 하셨네요!</p>
+        {{/confirmCommit}}
+        <form id="confirm_commit" action="/users/{{id}}/commits" method="get">
+            <button type="submit" class="btn btn-success">커밋 확인하기</button>
+        </form>
         {{/githubId}}
         {{^githubId}}
         <div class="container-fluid">

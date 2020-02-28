@@ -13,4 +13,8 @@ public class Result {
     public boolean isTodayCommit() {
         return todayCommitCount != 0;
     }
+
+    public Result(int todayCommitCount) {
+        this.todayCommitCount = todayCommitCount;
+    }
 }
