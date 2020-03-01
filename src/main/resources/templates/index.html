@@ -26,9 +26,25 @@
 <!--            <button type="submit" class="btn btn-success">나에게 메시지 보내기</button>-->
 <!--        </form>-->
 
-        {{#confirmCommit}}
-            <p>오늘은 {{todayCommitCount}} 커밋을 하셨네요!</p>
-        {{/confirmCommit}}
+        {{#isCommitted}}
+<!--            <p>오늘은 {{todayCommitCount}} 커밋을 하셨네요!</p>-->
+            <div class="card border-success mb-3" style="margin:0 auto; width: 100%; max-width: 20rem;">
+                <div class="card-header">커밋성공</div>
+                <div class="card-body">
+                    <h4 class="card-title">오늘은 커밋을 하셨군요!</h4>
+                    <p class="card-text">지금처럼 꾸준히 커밋하세요</p>
+                </div>
+            </div>
+        {{/isCommitted}}
+        {{#isNotCommitted}}
+            <div class="card border-danger mb-3" style="margin:0 auto; width: 100%; max-width: 20rem;">
+                <div class="card-header">커밋실패..</div>
+                <div class="card-body">
+                    <h4 class="card-title">아직 커밋을 안했어요</h4>
+                    <p class="card-text">놀지말고 지금 당장 커밋하세요!</p>
+                </div>
+            </div>
+        {{/isNotCommitted}}
         <form id="confirm_commit" action="/users/{{id}}/commits" method="get">
             <button type="submit" class="btn btn-success">커밋 확인하기</button>
         </form>

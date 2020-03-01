@@ -34,11 +34,11 @@ public class Scheduler {
     private void sendMessage(Integer userId) throws JsonProcessingException {
         String githubId = userService.findUserByUserId(userId).getGithubId();
         Result result = githubService.getJsonDataWhereTodayCommitByGithubId(githubId);
-        if (result.isTodayCommit()) {
-            log.debug("깃허브 아이디 : {}, 오늘 커밋 수 : {}", githubId, result.getTodayCommitCount());
+        if (result.isCommitted()) {
+            log.debug("깃허브 아이디 : {}, 커밋완료", githubId);
             return;
         }
-        log.debug("커밋 메시지 전송 시간이 되어 {}에게 메시지를 보냅니다.", githubId);
+        log.debug("{}님이 아직 커밋을 하지 않아 메시지를 보냅니다.", githubId);
         kakaoService.sendMessageToMe(userId);
     }
 }

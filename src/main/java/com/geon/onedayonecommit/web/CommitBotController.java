@@ -27,8 +27,11 @@ public class CommitBotController {
     public String confirmCommitCountToday(@PathVariable Integer userId, Model model) throws JsonProcessingException {
         String githubId = userService.findUserByUserId(userId).getGithubId();
         Result result = githubService.getJsonDataWhereTodayCommitByGithubId(githubId);
-        log.debug("오늘 커밋 수 : {}", result.getTodayCommitCount());
-        model.addAttribute("confirmCommit", result);
+        if (result.isCommitted()) {
+            model.addAttribute("isCommitted", result);
+        } else {
+            model.addAttribute("isNotCommitted", result);
+        }
         return "index";
     }
 
@@ -36,8 +39,8 @@ public class CommitBotController {
     public String sendMessage(@PathVariable Integer userId) throws JsonProcessingException {
         String githubId = userService.findUserByUserId(userId).getGithubId();
         Result result = githubService.getJsonDataWhereTodayCommitByGithubId(githubId);
-        if (result.isTodayCommit()) {
-            log.debug("깃허브 아이디 : {}, 오늘 커밋 수 : {}", githubId, result.getTodayCommitCount());
+        if (result.isCommitted()) {
+            log.debug("깃허브 아이디 : {}, 오늘 커밋 했는가 : {}", githubId, result.isCommitted());
             return "redirect:/";
         }
         kakaoService.sendMessageToMe(userId);
