@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.geon.onedayonecommit.dto.Result;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GithubService {
     private final RestTemplate restTemplate;
 
@@ -46,17 +48,14 @@ public class GithubService {
     private Result _toResult(String jsonData) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(jsonData);
-        for (JsonNode node : jsonNode) {
-            System.out.println("노드 : " + node.asText());
-        }
 
         if (jsonNode.get("total_count").asText().equals("0")) {
             return new Result(false);
         }
         JsonNode node = jsonNode.get("items").get(0).get("commit").get("committer").get("date");
         String recentCommitTime = node.asText().split("T")[0];
-        System.out.println("최근 커밋 시간 : " + recentCommitTime);
-        System.out.println("현재 날짜 : " + LocalDate.now().toString());
+        log.debug("최근 커밋 시간 : " + recentCommitTime);
+        log.debug("현재 날짜 : " + LocalDate.now().toString());
         return new Result(recentCommitTime.equals(LocalDate.now().toString()));
     }
 }
