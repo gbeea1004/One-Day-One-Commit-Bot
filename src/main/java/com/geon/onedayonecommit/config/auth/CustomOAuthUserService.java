@@ -3,10 +3,11 @@ package com.geon.onedayonecommit.config.auth;
 import com.geon.onedayonecommit.config.auth.dto.OAuthAttributes;
 import com.geon.onedayonecommit.config.auth.dto.SessionUser;
 import com.geon.onedayonecommit.domain.token.Token;
-import com.geon.onedayonecommit.domain.user.User;
 import com.geon.onedayonecommit.domain.token.TokenRepository;
+import com.geon.onedayonecommit.domain.user.User;
 import com.geon.onedayonecommit.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,7 +18,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -30,18 +33,17 @@ public class CustomOAuthUserService implements OAuth2UserService<OAuth2UserReque
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
         String registrationId = userRequest.getClientRegistration()
                                             .getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration()
                                                   .getProviderDetails()
                                                   .getUserInfoEndpoint()
                                                   .getUserNameAttributeName();
-
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("loginedUser", new SessionUser(user));
 
+        // TODO : 리프레시 토큰을 어떻게 가져올 수 있을까... 이게 있어야 엑세스 토큰을 다시 발급할 수 있는데..
         Token token = new Token(user.getId(), userRequest.getAccessToken().getTokenValue());
         tokenRepository.save(token);
 

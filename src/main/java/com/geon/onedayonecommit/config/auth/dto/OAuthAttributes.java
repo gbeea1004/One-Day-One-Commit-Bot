@@ -16,6 +16,8 @@ public class OAuthAttributes {
     private String picture;
     private String githubId;
 
+    private final Integer ADMIN_ID = 1291765050;
+
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, Integer id, String name, String picture, String githubId) {
         this.attributes = attributes;
@@ -42,11 +44,16 @@ public class OAuthAttributes {
     }
 
     public User toEntity() {
-        return User.builder()
-                   .id(id)
-                   .name(name)
-                   .picture(picture)
-                   .role(Role.GUEST)
-                   .build();
+        User.UserBuilder builder = User.builder()
+                                       .id(id)
+                                       .picture(this.picture);
+        if (id.equals(ADMIN_ID)) {
+            builder.name("관리자")
+                   .role(Role.ADMIN);
+        } else {
+            builder.name(name)
+                   .role(Role.GUEST);
+        }
+        return builder.build();
     }
 }

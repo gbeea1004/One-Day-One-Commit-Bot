@@ -1,0 +1,14 @@
+{{#partial "contents"}}
+<div class="container-fluid">
+    <h1>관리자 페이지</h1>
+    <p>
+        <button type="button" class="btn btn-outline-info" onclick="location.href='/admin/users'">회원 관리 페이지 이동</button>
+    </p>
+    <form action="/admin/users/sendMessage" method="post">
+        <button type="submit" class="btn btn-outline-warning">커밋 안한 회원들에게 메시지 보내기</button>
+    </form>
+</div>
+
+{{/partial}}
+
+{{>base}}

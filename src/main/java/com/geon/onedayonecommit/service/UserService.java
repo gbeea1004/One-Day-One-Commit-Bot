@@ -22,6 +22,10 @@ public class UserService {
                              .orElseThrow(IllegalArgumentException::new);
     }
 
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
     public List<User> findAllUsersWhereGithubIdIsNotNull() {
         List<User> users = userRepository.findAllByGithubIdIsNotNull();
         if (users.size() == 0) {

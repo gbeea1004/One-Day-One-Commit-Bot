@@ -1,0 +1,26 @@
+{{#partial "contents"}}
+<div class="container-fluid">
+    <h2>회원 정보</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">GITHUB ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#users}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{githubId}}</td>
+        </tr>
+        {{/users}}
+        </tbody>
+    </table>
+</div>
+{{#users}}
+{{/users}}
+
+{{/partial}}
+
+{{>base}}

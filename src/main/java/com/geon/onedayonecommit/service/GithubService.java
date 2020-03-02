@@ -23,6 +23,9 @@ public class GithubService {
     private final RestTemplate restTemplate;
 
     public boolean isExistUser(String githubId) {
+        if (githubId == null) {
+            return false;
+        }
         try {
             restTemplate.getForEntity("https://api.github.com/users/" + githubId, String.class);
         } catch (HttpClientErrorException e) {
