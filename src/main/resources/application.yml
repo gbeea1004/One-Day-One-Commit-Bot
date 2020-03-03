@@ -7,13 +7,9 @@ spring:
   h2:
     console:
       enabled: true
-  datasource:
-    url: jdbc:h2:~/one-day-one-commit;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
     database-platform: org.hibernate.dialect.H2Dialect
-  profiles:
-    include: oauth
